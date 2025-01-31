@@ -1,0 +1,10 @@
+node_modules/
+*.DS_Store
+.AppleDouble
+.LSOverride
+dist/
+# User-specific stuff
+.idea/
+.vscode/
+# File-based project format
+*.iws

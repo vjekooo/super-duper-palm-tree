@@ -1,0 +1,35 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "extends": [
+    "standard",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended",
+    "prettier"
+  ],
+  "plugins": ["react", "@typescript-eslint", "prettier", "react-hooks"],
+  "parserOptions": {
+    "project": "./tsconfig.json",
+    "tsconfigRootDir": "./",
+    "ecmaVersion": 2018,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "ignorePatterns": ["public/", "node_modules/", "**/*config.js", "build-utils/"],
+  "rules": {
+    "react-hooks/rules-of-hooks": "error",
+    "prettier/prettier": "error",
+    "react/prop-types": 0,
+    "no-tabs": 0,
+    "react/react-in-jsx-scope": "off",
+    "@typescript-eslint/indent": ["error", "tab"],
+    "@typescript-eslint/ban-ts-comment": "warn"
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  }
+}
