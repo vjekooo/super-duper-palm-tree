@@ -13,12 +13,10 @@ const url = 'http://api.quotable.io/random'
 export const Game: React.FC = () => {
 	const { data } = useAxios(url)
 
-	console.log(data)
-
 	return (
 		<Container>
 			<div>Game</div>
-			<HangMan quote={data?.content as string} />
+			{data?.content && <HangMan quote={data?.content as string} />}
 		</Container>
 	)
 }

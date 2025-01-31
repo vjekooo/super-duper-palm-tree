@@ -5,13 +5,12 @@ import { Hello, Game } from 'routes'
 import { GlobalStyle, themeStyles } from 'lib/style'
 
 const defaultTheme: DomainTheme = {
-	background: 'salmon',
-	font: 'Avenir'
+	background: 'salmon'
 }
 
 const Wrapper = styled.div`
 	margin: 0 auto;
-	max-width: 800px;
+	max-width: 900px;
 	padding: 20px 20px;
 	${themeStyles};
 `
