@@ -25,7 +25,8 @@
     "no-tabs": 0,
     "react/react-in-jsx-scope": "off",
     "@typescript-eslint/indent": ["error", "tab"],
-    "@typescript-eslint/ban-ts-comment": "warn"
+    "@typescript-eslint/ban-ts-comment": "warn",
+    "@typescript-eslint/no-explicit-any": "off"
   },
   "settings": {
     "react": {

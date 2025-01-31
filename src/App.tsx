@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import styled, { ThemeProvider, DomainTheme } from 'styled-components'
 import { Header } from 'components/Header'
-import { Hello, World } from 'routes'
+import { Hello, Game } from 'routes'
 import { GlobalStyle, themeStyles } from 'lib/style'
 
 const defaultTheme: DomainTheme = {
@@ -11,8 +11,8 @@ const defaultTheme: DomainTheme = {
 
 const Wrapper = styled.div`
 	margin: 0 auto;
-	max-width: 600px;
-	padding: 0 10px;
+	max-width: 800px;
+	padding: 20px 20px;
 	${themeStyles};
 `
 
@@ -23,7 +23,7 @@ const App: React.FC = (): JSX.Element => (
 				<Header />
 				<Routes>
 					<Route path="/" element={<Hello />} />
-					<Route path="/world" element={<World />} />
+					<Route path="/game" element={<Game />} />
 					<Route element={<div>404</div>} />
 				</Routes>
 			</BrowserRouter>
