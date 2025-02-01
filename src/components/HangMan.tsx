@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { useTimer } from '../hooks/useTimer'
+import { calculateUniqueCharacters } from '../lib'
 
 interface Quote {
 	quoteId: string
@@ -52,12 +53,6 @@ const Letter = styled.div<{ $disabled?: boolean }>`
 const letters = Array.from({ length: 26 }, (_, i) =>
 	String.fromCharCode(97 + i)
 )
-
-const calculateUniqueCharacters = (sentence: string) => {
-	const transformedSentence = sentence.toLowerCase().replace(/[^a-z]/g, '')
-	const uniqueCharacters = new Set(transformedSentence.split(''))
-	return uniqueCharacters.size
-}
 
 const MAX_ATTEMPTS = 6
 

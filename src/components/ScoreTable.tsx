@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { calculateScore } from '../lib'
 
 interface ScoreEntry {
 	id: number
@@ -29,22 +30,6 @@ const Row = styled.div`
 
 interface Props {
 	data: ScoreEntry[]
-}
-
-const calculateScore = (
-	length: number,
-	uniqueLetters: number,
-	errors: number,
-	time: number
-) => {
-	const timeInSeconds = time / 1000
-
-	return Math.max(
-		0,
-		Math.round(
-			((length * 2 + uniqueLetters) * 100) / ((1 + errors) * timeInSeconds)
-		)
-	)
 }
 
 const transformToTableData = (data: ScoreEntry[]): Score[] => {
