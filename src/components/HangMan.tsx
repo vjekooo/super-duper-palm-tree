@@ -122,7 +122,7 @@ export const HangMan = ({ quote }: Props) => {
 				uniqueCharacters: calculateUniqueCharacters(sentence),
 				userName,
 				errors: wrongGuesses,
-				duration: timeElapsed
+				duration: timeElapsed * 1000
 			}
 			axios
 				.post(url, postData, {
