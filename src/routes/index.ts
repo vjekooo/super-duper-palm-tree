@@ -1,3 +1,3 @@
-export { Hello } from './Hello'
-export { Game } from './Game'
-export { Score } from './Score'
+export { HomeScreen } from './HomeScreen'
+export { GameScreen } from './GameScreen'
+export { ScoreScreen } from './ScoreScreen'

@@ -4,7 +4,7 @@
  * @param {string} sentence - The input sentence to analyze.
  * @returns {number} The number of unique alphabetic characters in the sentence.
  */
-export const calculateUniqueCharacters = (sentence: string): number => {
+export const calculateNumberOfUniqueCharacters = (sentence: string): number => {
 	const transformedSentence = sentence.toLowerCase().replace(/[^a-z]/g, '')
 	const uniqueCharacters = new Set(transformedSentence.split(''))
 	return uniqueCharacters.size
@@ -37,4 +37,38 @@ export const calculateScore = (
 			((length * 2 + uniqueLetters) * 100) / ((1 + errors) * timeInSeconds)
 		)
 	)
+}
+
+/**
+ * Generates an array of alphabet letters from 'a' to 'z'.
+ *
+ * @returns {string[]}
+ */
+export const generateAlphabetLetters = Array.from({ length: 26 }, (_, i) =>
+	String.fromCharCode(97 + i)
+)
+
+/**
+ * Transforms a sentence into a formatted array where each character in the sentence
+ * is represented differently based on the guessed letters. Not guessed letters are replaced with underscores,
+ * while guessed letter is represented by itself.
+ * Special chars are ignored by returning self.
+ *
+ * @param {string} sentence - The input sentence to be transformed.
+ * @param {string[]} guessedLetters - An array of guessed letters.
+ * @returns {string[]} An array representing the transformed sentence.
+ */
+export const transformSentence = (
+	sentence: string,
+	guessedLetters: string[]
+): string[] => {
+	return sentence?.split('').map(char => {
+		if (char === ' ') {
+			return ' '
+		} else if (!/[a-zA-Z]/.test(char)) {
+			return ` ${char} `
+		} else {
+			return guessedLetters.includes(char) ? ` ${char} ` : '_'
+		}
+	})
 }

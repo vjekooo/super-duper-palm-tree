@@ -1,65 +1,33 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import styled from 'styled-components'
-import { useTimer } from '../hooks/useTimer'
-import { calculateUniqueCharacters } from '../lib'
-
-interface Quote {
-	quoteId: string
-	content: string
-	length: number
-}
+import { useTimer } from '../../hooks/useTimer'
+import {
+	calculateNumberOfUniqueCharacters,
+	generateAlphabetLetters,
+	transformSentence
+} from '../../lib'
+import {
+	Alphabet,
+	Char,
+	Container,
+	Letter,
+	QuoteContainer
+} from './Game.styled'
+import { Quote } from '../types'
 
 interface Props {
 	quote: Quote
 }
-
-const Container = styled.div`
-	display: flex;
-	flex-direction: column;
-	gap: 20px;
-`
-
-const QuoteContainer = styled.div`
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-`
-
-const Char = styled.div`
-	width: 25px;
-	height: 25px;
-	margin-bottom: 10px;
-	font-size: 20px;
-`
-
-const Alphabet = styled.div`
-	display: flex;
-	gap: 5px;
-`
-
-const Letter = styled.div<{ $disabled?: boolean }>`
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	text-transform: uppercase;
-	width: 35px;
-	height: 35px;
-	background: ${props => (props.$disabled ? 'salmon' : '#ccc')};
-	color: ${props => (props.$disabled ? '#000' : 'white')};
-`
-
-const letters = Array.from({ length: 26 }, (_, i) =>
-	String.fromCharCode(97 + i)
-)
 
 const MAX_ATTEMPTS = 6
 
 const url =
 	'https://my-json-server.typicode.com/stanko-ingemark/hang_the_wise_man_frontend_task/highscores'
 
-export const HangMan = ({ quote }: Props) => {
+const letters = generateAlphabetLetters
+
+export const Game = ({ quote }: Props) => {
 	const userName = useSelector((state: any) => state.game.userName)
 
 	const [sentence] = useState(quote.content)
@@ -80,19 +48,7 @@ export const HangMan = ({ quote }: Props) => {
 		}
 	}
 
-	const getDisplaySentence = () => {
-		return sentence?.split('').map(char => {
-			if (char === ' ') {
-				return ' '
-			} else if (!/[a-zA-Z]/.test(char)) {
-				return ` ${char} `
-			} else {
-				return guessedLetters.includes(char) ? ` ${char} ` : '_'
-			}
-		})
-	}
-
-	const displaySentence = getDisplaySentence()
+	const displaySentence = transformSentence(sentence, guessedLetters)
 
 	const isWinner = quote.content
 		?.split('')
@@ -114,7 +70,7 @@ export const HangMan = ({ quote }: Props) => {
 			const postData = {
 				quoteId: quote.quoteId,
 				length: quote.length,
-				uniqueCharacters: calculateUniqueCharacters(sentence),
+				uniqueCharacters: calculateNumberOfUniqueCharacters(sentence),
 				userName,
 				errors: wrongGuesses,
 				duration: timeElapsed * 1000

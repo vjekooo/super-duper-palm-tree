@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { HangMan } from '../components/HangMan'
+import { Game } from '../components/game/Game'
 import { useSelector } from 'react-redux'
 import axios from 'axios'
 import { useQuote } from '../hooks/useQuote'
@@ -23,7 +23,7 @@ const fetchQuote = async () => {
 	return response.data
 }
 
-export const Game: React.FC = () => {
+export const GameScreen: React.FC = () => {
 	const userName = useSelector((state: any) => state.game.userName)
 
 	const { quoteData, status, error } = useQuote<Quote>(fetchQuote)
@@ -38,7 +38,7 @@ export const Game: React.FC = () => {
 		<Container>
 			<div>{userName}</div>
 			<div>{status === 'pending' && 'Loading...'}</div>
-			{status === 'success' && <HangMan quote={quote} />}
+			{status === 'success' && <Game quote={quote} />}
 			<div>{error ? 'Something went wrong' : ''}</div>
 		</Container>
 	)

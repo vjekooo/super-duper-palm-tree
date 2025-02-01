@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import styled, { ThemeProvider, DomainTheme } from 'styled-components'
 import { Header } from 'components/Header'
-import { Hello, Game, Score } from 'routes'
+import { HomeScreen, GameScreen, ScoreScreen } from 'routes'
 import { GlobalStyle, themeStyles } from 'lib/style'
 
 const defaultTheme: DomainTheme = {
@@ -21,9 +21,9 @@ const App: React.FC = (): JSX.Element => (
 			<BrowserRouter>
 				<Header />
 				<Routes>
-					<Route path="/" element={<Hello />} />
-					<Route path="/game" element={<Game />} />
-					<Route path="/score" element={<Score />} />
+					<Route path="/" element={<HomeScreen />} />
+					<Route path="/game" element={<GameScreen />} />
+					<Route path="/score" element={<ScoreScreen />} />
 					<Route element={<div>404</div>} />
 				</Routes>
 			</BrowserRouter>

@@ -1,5 +1,5 @@
 import { renderHook, waitFor } from '@testing-library/react'
-import { useQuote } from './useQuote'
+import { useQuote } from '../hooks/useQuote'
 import axios from 'axios'
 
 jest.mock('axios')

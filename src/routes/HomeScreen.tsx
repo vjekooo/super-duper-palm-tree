@@ -17,7 +17,7 @@ const Button = styled.button`
 	color: cadetblue;
 `
 
-export const Hello: React.FC = () => {
+export const HomeScreen: React.FC = () => {
 	const navigate = useNavigate()
 	const [name, setName] = useState('')
 
