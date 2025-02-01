@@ -1,13 +1,15 @@
 ### To run
 
-- Have [git](https://git-scm.com/) and [node](https://nodejs.org/en/) installed on your system.
-- Fork and clone the project:
+- Have node installed. Everything above 20 should work.
+- Made the task on 20.18.1
+
+- Clone the project:
 
 ```
 git clone https://github.com/vjekooo/super-duper-palm-tree
 ```
 
-- Then install the dependencies:
+- Install the dependencies:
 
 ```
 yarn install
@@ -19,18 +21,10 @@ yarn install
 yarn dev
 ```
 
-- Wait for the browser to open
+Wait for the browser to open
 
 ### To test
 
-To run unit tests:
-
 ```
 yarn test
-```
-
-### To build the production package
-
-```
-yarn build
 ```
