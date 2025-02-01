@@ -1,6 +1,8 @@
 import { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
+import { setUserName } from '../actions'
 
 const Container = styled.div`
 	display: flex;
@@ -19,7 +21,10 @@ export const Hello: React.FC = () => {
 	const navigate = useNavigate()
 	const [name, setName] = useState('')
 
+	const dispatch = useDispatch()
+
 	const submitName = () => {
+		dispatch(setUserName(name))
 		navigate('/game')
 	}
 

@@ -103,8 +103,9 @@ export const HangMan = ({ quote }: Props) => {
 					</Letter>
 				))}
 			</Alphabet>
-			<div>You have: {MAX_ATTEMPTS - wrongGuesses} lives</div>
+			<div>You have: {MAX_ATTEMPTS - wrongGuesses} lives left</div>
 			<div>{isWinner ? 'Your win' : ''}</div>
+			<div>{isLoser ? 'Your lose' : ''}</div>
 		</Container>
 	)
 }
