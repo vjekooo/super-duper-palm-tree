@@ -11,12 +11,13 @@ const Container = styled.div`
 const url = 'http://api.quotable.io/random'
 
 export const Game: React.FC = () => {
-	const { data } = useAxios(url)
+	const { data, loading, error } = useAxios(url)
 
 	return (
 		<Container>
-			<div>Game</div>
+			<div>{loading ? 'Loading...' : ''}</div>
 			{data?.content && <HangMan quote={data?.content as string} />}
+			<div>{error ? 'Something went wrong' : ''}</div>
 		</Container>
 	)
 }

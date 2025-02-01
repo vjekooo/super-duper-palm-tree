@@ -26,7 +26,11 @@ export const Hello: React.FC = () => {
 	return (
 		<Container>
 			<label>Name</label>
-			<input value={name} onChange={e => setName(e.target.value)} placeholder="Please enter your name" />
+			<input
+				value={name}
+				onChange={e => setName(e.target.value)}
+				placeholder="Please enter your name"
+			/>
 			<Button onClick={() => submitName()} disabled={!name}>
 				Submit
 			</Button>

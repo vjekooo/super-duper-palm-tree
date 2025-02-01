@@ -13,11 +13,14 @@ const Container = styled.div`
 
 const QuoteContainer = styled.div`
 	display: flex;
-	gap: 5px;
+	flex-direction: row;
+	flex-wrap: wrap;
 `
 
 const Char = styled.div`
-	width: 35px;
+	width: 25px;
+	height: 25px;
+	margin-bottom: 10px;
 	font-size: 20px;
 `
 
@@ -37,7 +40,9 @@ const Letter = styled.div<{ $disabled?: boolean }>`
 	color: ${props => (props.$disabled ? '#000' : 'white')};
 `
 
-const letters = Array.from({ length: 26 }, (_, i) => String.fromCharCode(97 + i))
+const letters = Array.from({ length: 26 }, (_, i) =>
+	String.fromCharCode(97 + i)
+)
 
 const MAX_ATTEMPTS = 6
 
@@ -73,7 +78,10 @@ export const HangMan = ({ quote }: Props) => {
 
 	const isWinner = quote
 		?.split('')
-		.every(char => char === ' ' || !/[a-zA-Z]/.test(char) || guessedLetters.includes(char))
+		.every(
+			char =>
+				char === ' ' || !/[a-zA-Z]/.test(char) || guessedLetters.includes(char)
+		)
 
 	const isLoser = wrongGuesses >= MAX_ATTEMPTS
 
@@ -86,7 +94,11 @@ export const HangMan = ({ quote }: Props) => {
 			</QuoteContainer>
 			<Alphabet>
 				{letters.map(letter => (
-					<Letter key={letter} $disabled={guessedLetters.includes(letter)} onClick={() => handleGuess(letter)}>
+					<Letter
+						key={letter}
+						$disabled={guessedLetters.includes(letter)}
+						onClick={() => handleGuess(letter)}
+					>
 						<span>{letter}</span>
 					</Letter>
 				))}
