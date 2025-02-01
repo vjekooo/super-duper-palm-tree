@@ -7,7 +7,7 @@ import { setUserName } from '../actions'
 const Container = styled.div`
 	display: flex;
 	flex-direction: column;
-	gap: 5px;
+	gap: 10px;
 	margin: 0 auto;
 `
 
@@ -15,6 +15,12 @@ const Button = styled.button`
 	padding: 10px;
 	max-width: 100px;
 	color: cadetblue;
+`
+
+const Input = styled.input`
+	height: 40px;
+	max-width: 300px;
+	padding: 3px 10px;
 `
 
 export const HomeScreen: React.FC = () => {
@@ -31,7 +37,7 @@ export const HomeScreen: React.FC = () => {
 	return (
 		<Container>
 			<label>Name</label>
-			<input
+			<Input
 				value={name}
 				onChange={e => setName(e.target.value)}
 				placeholder="Please enter your name"

@@ -1,12 +1,7 @@
-import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useTimer } from '../../hooks/useTimer'
-import {
-	calculateNumberOfUniqueCharacters,
-	generateAlphabetLetters,
-	transformSentence
-} from '../../lib'
+
 import {
 	Alphabet,
 	Char,
@@ -14,7 +9,14 @@ import {
 	Letter,
 	QuoteContainer
 } from './Game.styled'
-import { Quote } from '../types'
+import { $fetch } from '../../lib/fetch'
+import { MessageResponse, Quote } from '../../lib/types'
+import {
+	calculateNumberOfUniqueCharacters,
+	generateAlphabetLetters,
+	transformSentence
+} from '../../lib/utils'
+import { useToast } from '../../hooks/useToast'
 
 interface Props {
 	quote: Quote
@@ -25,10 +27,17 @@ const MAX_ATTEMPTS = 6
 const url =
 	'https://my-json-server.typicode.com/stanko-ingemark/hang_the_wise_man_frontend_task/highscores'
 
-const letters = generateAlphabetLetters
+const sendGameData = async (postData: any) => {
+	const { data } = await $fetch<any, MessageResponse>(url).post(postData)
+	return data
+}
+
+const letters = generateAlphabetLetters()
 
 export const Game = ({ quote }: Props) => {
 	const userName = useSelector((state: any) => state.game.userName)
+
+	const { ToastComponent, showToast } = useToast()
 
 	const [sentence] = useState(quote.content)
 	const [guessedLetters, setGuessedLetters] = useState<string[]>([])
@@ -50,7 +59,7 @@ export const Game = ({ quote }: Props) => {
 
 	const displaySentence = transformSentence(sentence, guessedLetters)
 
-	const isWinner = quote.content
+	const isWinner = sentence
 		?.split('')
 		.every(
 			char =>
@@ -75,23 +84,19 @@ export const Game = ({ quote }: Props) => {
 				errors: wrongGuesses,
 				duration: timeElapsed * 1000
 			}
-			axios
-				.post(url, postData, {
-					headers: {
-						'Content-Type': 'application/json'
-					}
-				})
-				.then(response => {
-					console.log('Success:', response.data)
+			sendGameData(postData)
+				.then(() => {
+					showToast('Your score has been saved')
 				})
 				.catch(error => {
-					console.error('Error posting data:', error)
+					showToast(error.message || 'Something went wrong')
 				})
 		}
 	}, [gameOver])
 
 	return (
 		<Container>
+			<ToastComponent />
 			<div>Time elapsed: {timeElapsed} seconds</div>
 			<QuoteContainer>
 				{displaySentence.map((char, i) => (

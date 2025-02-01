@@ -5,7 +5,7 @@ import { HomeScreen, GameScreen, ScoreScreen } from 'routes'
 import { GlobalStyle, themeStyles } from 'lib/style'
 
 const defaultTheme: DomainTheme = {
-	background: 'salmon'
+	background: 'lavender'
 }
 
 const Wrapper = styled.div`

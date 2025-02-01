@@ -15,6 +15,11 @@ export interface ScoreEntry {
 }
 
 export interface Score {
+	id: number
 	userName: string
 	score: number
+}
+
+export interface MessageResponse {
+	message: string
 }

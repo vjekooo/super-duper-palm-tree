@@ -1,6 +1,6 @@
-import { calculateScore } from '../../lib'
 import { Container, Row } from './Scoretable.styled'
-import { Score, ScoreEntry } from '../types'
+import { calculateScore } from '../../lib/utils'
+import { Score, ScoreEntry } from '../../lib/types'
 
 interface Props {
 	data: ScoreEntry[]
@@ -8,6 +8,7 @@ interface Props {
 
 const transformResponseToTableData = (data: ScoreEntry[]): Score[] => {
 	return data.map((entry: ScoreEntry) => ({
+		id: entry.id,
 		userName: entry.userName,
 		score: calculateScore(
 			entry.length,
@@ -27,7 +28,7 @@ export const ScoreTable = ({ data }: Props) => {
 		<Container>
 			<div>
 				{tableData?.map(entry => (
-					<Row key={entry.userName}>
+					<Row key={entry.id}>
 						<div>{entry.userName}</div>
 						<div>{entry.score}</div>
 					</Row>

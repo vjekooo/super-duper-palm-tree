@@ -44,9 +44,8 @@ export const calculateScore = (
  *
  * @returns {string[]}
  */
-export const generateAlphabetLetters = Array.from({ length: 26 }, (_, i) =>
-	String.fromCharCode(97 + i)
-)
+export const generateAlphabetLetters = (): string[] =>
+	Array.from({ length: 26 }, (_, i) => String.fromCharCode(97 + i))
 
 /**
  * Transforms a sentence into a formatted array where each character in the sentence
