@@ -1,5 +1,6 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import { useTimer } from '../hooks/useTimer'
 
 interface Props {
 	quote: string
@@ -50,6 +51,9 @@ export const HangMan = ({ quote }: Props) => {
 	const [sentence] = useState(quote)
 	const [guessedLetters, setGuessedLetters] = useState<string[]>([])
 	const [wrongGuesses, setWrongGuesses] = useState(0)
+	const [gameOver, setGameOver] = useState(false)
+
+	const timeElapsed = useTimer(gameOver)
 
 	const handleGuess = (letter: string) => {
 		const lowerCaseLetter = letter.toLowerCase()
@@ -85,8 +89,15 @@ export const HangMan = ({ quote }: Props) => {
 
 	const isLoser = wrongGuesses >= MAX_ATTEMPTS
 
+	useEffect(() => {
+		if (isWinner || isLoser) {
+			setGameOver(true)
+		}
+	}, [isWinner, isLoser])
+
 	return (
 		<Container>
+			<div>Time elapsed: {timeElapsed} seconds</div>
 			<QuoteContainer>
 				{displaySentence.map((char, i) => (
 					<Char key={i}>{char}</Char>
