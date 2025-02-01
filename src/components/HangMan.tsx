@@ -125,7 +125,11 @@ export const HangMan = ({ quote }: Props) => {
 				duration: timeElapsed
 			}
 			axios
-				.post(url, postData)
+				.post(url, postData, {
+					headers: {
+						'Content-Type': 'application/json'
+					}
+				})
 				.then(response => {
 					console.log('Success:', response.data)
 				})
