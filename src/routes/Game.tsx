@@ -16,11 +16,17 @@ export const Game: React.FC = () => {
 
 	const { data, loading, error } = useAxios(url)
 
+	const quote = {
+		quoteId: data?._id as string,
+		content: data?.content as string,
+		length: data?.length as number
+	}
+
 	return (
 		<Container>
 			<div>{userName}</div>
 			<div>{loading ? 'Loading...' : ''}</div>
-			{data?.content && <HangMan quote={data?.content as string} />}
+			{data && <HangMan quote={quote} />}
 			<div>{error ? 'Something went wrong' : ''}</div>
 		</Container>
 	)

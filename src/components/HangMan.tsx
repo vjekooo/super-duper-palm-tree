@@ -1,9 +1,17 @@
+import axios from 'axios'
 import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { useTimer } from '../hooks/useTimer'
 
+interface Quote {
+	quoteId: string
+	content: string
+	length: number
+}
+
 interface Props {
-	quote: string
+	quote: Quote
 }
 
 const Container = styled.div`
@@ -45,10 +53,21 @@ const letters = Array.from({ length: 26 }, (_, i) =>
 	String.fromCharCode(97 + i)
 )
 
+const calculateUniqueCharacters = (sentence: string) => {
+	const transformedSentence = sentence.toLowerCase().replace(/[^a-z]/g, '')
+	const uniqueCharacters = new Set(transformedSentence.split(''))
+	return uniqueCharacters.size
+}
+
 const MAX_ATTEMPTS = 6
 
+const url =
+	'https://my-json-server.typicode.com/stanko-ingemark/hang_the_wise_man_frontend_task/highscores'
+
 export const HangMan = ({ quote }: Props) => {
-	const [sentence] = useState(quote)
+	const userName = useSelector((state: any) => state.game.userName)
+
+	const [sentence] = useState(quote.content)
 	const [guessedLetters, setGuessedLetters] = useState<string[]>([])
 	const [wrongGuesses, setWrongGuesses] = useState(0)
 	const [gameOver, setGameOver] = useState(false)
@@ -80,7 +99,7 @@ export const HangMan = ({ quote }: Props) => {
 
 	const displaySentence = getDisplaySentence()
 
-	const isWinner = quote
+	const isWinner = quote.content
 		?.split('')
 		.every(
 			char =>
@@ -94,6 +113,27 @@ export const HangMan = ({ quote }: Props) => {
 			setGameOver(true)
 		}
 	}, [isWinner, isLoser])
+
+	useEffect(() => {
+		if (gameOver) {
+			const postData = {
+				quoteId: quote.quoteId,
+				length: quote.length,
+				uniqueCharacters: calculateUniqueCharacters(sentence),
+				userName,
+				errors: wrongGuesses,
+				duration: timeElapsed
+			}
+			axios
+				.post(url, postData)
+				.then(response => {
+					console.log('Success:', response.data)
+				})
+				.catch(error => {
+					console.error('Error posting data:', error)
+				})
+		}
+	}, [gameOver])
 
 	return (
 		<Container>
