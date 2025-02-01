@@ -31,20 +31,41 @@ interface Props {
 	data: ScoreEntry[]
 }
 
-const calculateScore = (data: ScoreEntry[]): Score[] => {
+const calculateScore = (
+	length: number,
+	uniqueLetters: number,
+	errors: number,
+	time: number
+) => {
+	const timeInSeconds = time / 1000
+
+	return Math.max(
+		0,
+		Math.round(
+			((length * 2 + uniqueLetters) * 100) / ((1 + errors) * timeInSeconds)
+		)
+	)
+}
+
+const transformToTableData = (data: ScoreEntry[]): Score[] => {
 	return data.map((entry: ScoreEntry) => ({
 		userName: entry.userName,
-		score: Math.round(100 / (1 + entry.errors))
+		score: calculateScore(
+			entry.length,
+			entry.uniqueCharacters,
+			entry.errors,
+			entry.duration
+		)
 	}))
 }
 
 export const ScoreTable = ({ data }: Props) => {
-	const scores = calculateScore(data).sort((a, b) => b.score - a.score)
+	const tableData = transformToTableData(data).sort((a, b) => b.score - a.score)
 
 	return (
 		<Container>
 			<div>
-				{scores?.map(entry => (
+				{tableData?.map(entry => (
 					<Row key={entry.userName}>
 						<div>{entry.userName}</div>
 						<div>{entry.score}</div>
