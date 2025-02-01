@@ -8,3 +8,4 @@ dist/
 .vscode/
 # File-based project format
 *.iws
+coverage
