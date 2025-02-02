@@ -2,21 +2,15 @@ import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useTimer } from '../../hooks/useTimer'
 
-import {
-	Alphabet,
-	Char,
-	Container,
-	Letter,
-	QuoteContainer
-} from './Game.styled'
+import { Alphabet, Container, Letter } from './Game.styled'
 import { $fetch } from '../../lib/fetch'
 import { MessageResponse, Quote } from '../../lib/types'
 import {
 	calculateNumberOfUniqueCharacters,
-	generateAlphabetLetters,
-	transformQuoteForDisplay
+	generateAlphabetLetters
 } from '../../lib/utils'
 import { useToast } from '../../hooks/useToast'
+import { MaskedQuoteText } from '../maskedQuoteText/MaskedQuoteText'
 
 interface Props {
 	quote: Quote
@@ -57,8 +51,6 @@ export const Game = ({ quote }: Props) => {
 		}
 	}
 
-	const displaySentence = transformQuoteForDisplay(sentence, guessedLetters)
-
 	const isWinner = sentence
 		?.split('')
 		.every(
@@ -98,11 +90,7 @@ export const Game = ({ quote }: Props) => {
 		<Container>
 			<ToastComponent />
 			<div>Time elapsed: {timeElapsed} seconds</div>
-			<QuoteContainer>
-				{displaySentence.map((char, i) => (
-					<Char key={i}>{char}</Char>
-				))}
-			</QuoteContainer>
+			<MaskedQuoteText base={sentence} revealed={guessedLetters} />
 			<Alphabet>
 				{letters.map(letter => (
 					<Letter

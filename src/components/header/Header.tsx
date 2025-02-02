@@ -8,7 +8,7 @@ const links = [
 	{ name: 'Score', path: '/score' }
 ]
 
-export const Header: React.FC = () => {
+export const Header = () => {
 	const location = useLocation()
 	const userName = useSelector((state: any) => state.game.userName)
 
