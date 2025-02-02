@@ -9,3 +9,8 @@ dist/
 # File-based project format
 *.iws
 coverage
+
+# amplify
+.amplify
+amplify_outputs*
+amplifyconfiguration*
