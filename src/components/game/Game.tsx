@@ -69,7 +69,7 @@ export const Game = ({ quote }: Props) => {
 	useEffect(() => {
 		if (gameOver) {
 			const postData = {
-				quoteId: quote.quoteId,
+				quoteId: quote._id,
 				length: quote.length,
 				uniqueCharacters: calculateNumberOfUniqueCharacters(sentence),
 				userName,
