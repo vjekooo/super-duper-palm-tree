@@ -62,7 +62,7 @@ describe('useCachedQuote', () => {
 
 	it('should fallback to cached data on fetch failure', async () => {
 		const mockResponse = {
-			quoteId: 'Hjhja',
+			_id: 'Hjhja',
 			content: 'Test quote.',
 			length: 12
 		}

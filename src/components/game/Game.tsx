@@ -29,7 +29,7 @@ const sendGameData = async (postData: any) => {
 const letters = generateAlphabetLetters()
 
 export const Game = ({ quote }: Props) => {
-	const userName = useSelector((state: any) => state.game.userName)
+	const userName = useSelector((state: any) => state.user.userName)
 
 	const { ToastComponent, showToast } = useToast()
 

@@ -1,40 +1,30 @@
-import { combineReducers } from 'redux'
+import { combineReducers, createStore } from 'redux'
 import { SET_USER_NAME } from './actions'
 
-export interface UserScore {
+type User = {
 	userName: string
-	quoteId: number
-	length: number
-	uniqueCharacters: number
-	errors: number
-	duration: number
 }
 
 interface State {
-	game: UserScore
+	user: User
 }
 
 const initialState: State = {
-	game: {
-		userName: '',
-		quoteId: 0,
-		length: 0,
-		uniqueCharacters: 0,
-		errors: 0,
-		duration: 0
+	user: {
+		userName: ''
 	}
 }
 
 interface Action {
 	type: string
-	payload: string | number
+	payload: string
 }
 
-function gameReducer(state = initialState, action: Action) {
+function userReducer(state = initialState, action: Action) {
 	switch (action.type) {
 		case SET_USER_NAME:
 			return {
-				...state.game,
+				...state.user,
 				userName: action.payload
 			}
 
@@ -43,6 +33,7 @@ function gameReducer(state = initialState, action: Action) {
 	}
 }
 
-const rootReducer = combineReducers({ game: gameReducer })
+const rootReducer = combineReducers({ user: userReducer })
+const store = createStore(rootReducer)
 
-export default rootReducer
+export default store

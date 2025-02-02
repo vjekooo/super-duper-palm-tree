@@ -10,7 +10,7 @@ const links = [
 
 export const Header = () => {
 	const location = useLocation()
-	const userName = useSelector((state: any) => state.game.userName)
+	const userName = useSelector((state: any) => state.user.userName)
 
 	return (
 		<Container>
