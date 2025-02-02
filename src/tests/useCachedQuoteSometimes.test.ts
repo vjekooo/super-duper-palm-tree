@@ -45,8 +45,6 @@ describe('useCachedQuote', () => {
 			expect(result.current.status).toBe('success')
 			expect(result.current.quoteData).toEqual(mockResponse)
 		})
-
-		localStorage.clear()
 	})
 
 	it('should reject on fetch failure with no cached data', async () => {
@@ -83,7 +81,5 @@ describe('useCachedQuote', () => {
 			expect(result.current.status).toBe('success')
 			expect(result.current.quoteData).toBeDefined()
 		})
-
-		localStorage.clear()
 	})
 })

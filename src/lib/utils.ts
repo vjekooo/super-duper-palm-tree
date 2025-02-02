@@ -74,13 +74,27 @@ export const transformQuoteForDisplay = (
 	})
 }
 
+/**
+ * Stores a quote object into localStorage under the specified cache key.
+ *
+ * @param {string} cacheKey - The key under which the data will be stored in localStorage.
+ * @param {Quote} data - The Quote object to be stored.
+ * @returns {void}
+ */
 export const setQuoteToLocalStorage = (cacheKey: string, data: Quote): void => {
 	const cachedData = localStorage.getItem(cacheKey)
-	localStorage.setItem(cacheKey, JSON.stringify([data, cachedData]))
+	const dataArray = cachedData ? JSON.parse(cachedData) : []
+	localStorage.setItem(cacheKey, JSON.stringify([data, ...dataArray]))
 }
 
+/**
+ * Retrieves a random Quote object from localStorage using the specified cache key.
+ *
+ * @param {string} cacheKey - The key used to retrieve data from localStorage.
+ * @returns {Quote | null} The randomly selected Quote object, or null if no data exists.
+ */
 export const getRandomQuoteFromLocalStorage = (cacheKey: string): Quote => {
 	const cachedData = localStorage.getItem(cacheKey)
 	const data = cachedData ? JSON.parse(cachedData) : null
-	return data.length > 0 ? data[Math.floor(Math.random() * data.length)] : null
+	return data?.length > 0 ? data[Math.floor(Math.random() * data.length)] : null
 }
