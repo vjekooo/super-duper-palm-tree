@@ -29,7 +29,7 @@ export const GameScreen: React.FC = () => {
 	const { quoteData, status, error } = useQuote<Quote>(fetchQuote)
 
 	const quote = {
-		quoteId: quoteData?._id,
+		quoteId: 'Akjs',
 		content: quoteData?.content,
 		length: quoteData?.length
 	}

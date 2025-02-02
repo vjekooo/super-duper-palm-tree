@@ -50,16 +50,16 @@ export const generateAlphabetLetters = (): string[] =>
 	Array.from({ length: 26 }, (_, i) => String.fromCharCode(97 + i))
 
 /**
- * Transforms a sentence into a formatted array where each character in the sentence
+ * Transforms a quote into a formatted array where each character in the sentence
  * is represented differently based on the guessed letters. Not guessed letters are replaced with underscores,
  * while guessed letter is represented by itself.
  * Special chars are ignored by returning self.
  *
- * @param {string} sentence - The input sentence to be transformed.
+ * @param {string} sentence - The input quote to be transformed.
  * @param {string[]} guessedLetters - An array of guessed letters.
- * @returns {string[]} An array representing the transformed sentence.
+ * @returns {string[]} An array representing the transformed quote.
  */
-export const transformSentence = (
+export const transformQuoteForDisplay = (
 	sentence: string,
 	guessedLetters: string[]
 ): string[] => {
@@ -67,9 +67,9 @@ export const transformSentence = (
 		if (char === ' ') {
 			return ' '
 		} else if (!/[a-zA-Z]/.test(char)) {
-			return ` ${char} `
+			return char
 		} else {
-			return guessedLetters.includes(char) ? ` ${char} ` : '_'
+			return guessedLetters.includes(char) ? char : '_'
 		}
 	})
 }

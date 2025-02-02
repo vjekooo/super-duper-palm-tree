@@ -14,7 +14,7 @@ import { MessageResponse, Quote } from '../../lib/types'
 import {
 	calculateNumberOfUniqueCharacters,
 	generateAlphabetLetters,
-	transformSentence
+	transformQuoteForDisplay
 } from '../../lib/utils'
 import { useToast } from '../../hooks/useToast'
 
@@ -57,7 +57,7 @@ export const Game = ({ quote }: Props) => {
 		}
 	}
 
-	const displaySentence = transformSentence(sentence, guessedLetters)
+	const displaySentence = transformQuoteForDisplay(sentence, guessedLetters)
 
 	const isWinner = sentence
 		?.split('')

@@ -13,10 +13,11 @@ export const QuoteContainer = styled.div`
 `
 
 export const Char = styled.div`
-	width: 25px;
-	height: 25px;
+	width: 20px;
+	height: 20px;
 	margin-bottom: 10px;
 	font-size: 20px;
+	text-align: center;
 `
 
 export const Alphabet = styled.div`
