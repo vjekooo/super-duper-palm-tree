@@ -12,15 +12,15 @@ const Container = styled.div`
 `
 
 const Button = styled.button`
-	padding: 10px;
+	padding: 15px 10px;
 	max-width: 100px;
+	margin-left: 20px;
 	color: cadetblue;
 `
 
 const Input = styled.input`
-	height: 40px;
 	max-width: 300px;
-	padding: 3px 10px;
+	padding: 15px 10px;
 `
 
 export const HomeScreen: React.FC = () => {
@@ -37,14 +37,16 @@ export const HomeScreen: React.FC = () => {
 	return (
 		<Container>
 			<label>Name</label>
-			<Input
-				value={name}
-				onChange={e => setName(e.target.value)}
-				placeholder="Please enter your name"
-			/>
-			<Button onClick={() => submitName()} disabled={!name}>
-				Submit
-			</Button>
+			<div>
+				<Input
+					value={name}
+					onChange={e => setName(e.target.value)}
+					placeholder="Please enter your name"
+				/>
+				<Button onClick={() => submitName()} disabled={!name}>
+					Submit
+				</Button>
+			</div>
 		</Container>
 	)
 }

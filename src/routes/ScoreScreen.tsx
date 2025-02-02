@@ -1,5 +1,4 @@
 import { ScoreTable } from '../components/scoreTable/ScoreTable'
-import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { useFetch } from '../hooks/useFetch'
 import { $fetch } from '../lib/fetch'
@@ -8,6 +7,7 @@ import { ScoreEntry } from '../lib/types'
 const Container = styled.div`
 	display: flex;
 	flex-direction: column;
+	align-items: center;
 	gap: 20px;
 `
 
@@ -20,12 +20,11 @@ const fetchData = async () => {
 }
 
 export const ScoreScreen: React.FC = () => {
-	const userName = useSelector((state: any) => state.game.userName)
 	const { data, status, error } = useFetch<ScoreEntry[]>(fetchData)
 
 	return (
 		<Container>
-			<div>{userName}</div>
+			<h1>HIGH SCORES</h1>
 			<div>{status === 'pending' ? 'Loading...' : ''}</div>
 			{data && <ScoreTable data={data} />}
 			<div>{error ? 'Something went wrong' : ''}</div>
