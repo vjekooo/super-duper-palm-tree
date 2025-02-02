@@ -30,7 +30,7 @@ export function useCachedQuoteSometimes<T>(
 			setStatus('success')
 			onResolve(response)
 		} catch (err: any) {
-			setError(err.message || 'An error occurred while fetching the quote.')
+			setError(err?.message || 'An error occurred while fetching the quote.')
 			setStatus('error')
 			const cachedData = localStorage.getItem(cacheKey)
 			if (cachedData) {
@@ -52,12 +52,12 @@ export function useCachedQuoteSometimes<T>(
 		}
 	}, [fetchQuote, cacheKey])
 
-	const onResolve = (data: any) => {
+	const onResolve = (data: T) => {
 		console.log(data)
 	}
 
 	const onReject = (error: any) => {
-		console.error(error)
+		console.log(error)
 	}
 
 	return { quoteData, status, error, onResolve, onReject }

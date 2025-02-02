@@ -38,5 +38,34 @@ describe('useCachedQuote', () => {
 			const storedQuote = localStorage.getItem(cacheKey)
 			expect(storedQuote).toEqual(JSON.stringify(mockQuote))
 		})
+
+		localStorage.clear()
+	})
+
+	it('should reject on fetch failure with no cached data', async () => {
+		const fetchQuote = jest.fn().mockRejectedValue(new Error('Fetch failed'))
+
+		const { result } = renderHook(() => useCachedQuoteSometimes(fetchQuote))
+
+		expect(result.current.status).toBe('pending')
+		expect(result.current.quoteData).toBe(null)
+
+		await waitFor(() => {
+			expect(result.current.status).toBe('error')
+		})
+	})
+
+	it('should fallback to cached data on fetch failure', async () => {
+		const cachedData = { content: 'This is fallback cached data.' }
+		localStorage.setItem(cacheKey, JSON.stringify(cachedData))
+
+		const fetchQuote = jest.fn().mockRejectedValue(new Error('Fetch failed'))
+
+		const { result } = renderHook(() => useCachedQuoteSometimes(fetchQuote))
+
+		expect(result.current.status).toBe('success')
+		expect(result.current.quoteData).toEqual(cachedData)
+
+		localStorage.clear()
 	})
 })

@@ -7,7 +7,7 @@
 		"dev": "webpack serve --env mode=development",
 		"build": "npm run clean | webpack --env mode=production",
 		"build:analyze": "npm run build -- --env presets=analyze",
-		"test": "jest --coverage",
+		"test": "jest --silent --coverage",
 		"clean": "rm -rf ./dist"
 	},
 	"author": "Vjeko",
