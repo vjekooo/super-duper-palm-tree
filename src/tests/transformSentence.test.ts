@@ -1,4 +1,4 @@
-import { transformSentence } from '../lib'
+import { transformSentence } from '../lib/utils'
 
 describe('transformSentence', () => {
 	it('should transform the sentence based on guessed letters', () => {

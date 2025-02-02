@@ -1,4 +1,4 @@
-import { calculateNumberOfUniqueCharacters } from '../lib'
+import { calculateNumberOfUniqueCharacters } from '../lib/utils'
 
 describe('calculateUniqueCharacters', () => {
 	it('should handle a simple sentence with unique characters', () => {

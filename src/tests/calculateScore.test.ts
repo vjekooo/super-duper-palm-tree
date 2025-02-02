@@ -1,4 +1,4 @@
-import { calculateScore } from '../lib'
+import { calculateScore } from '../lib/utils'
 
 describe('calculateUniqueCharacters', () => {
 	it('should calculate score correctly for valid inputs', () => {

@@ -1,17 +1,19 @@
 import { useState, useEffect, useCallback } from 'react'
 
-interface UseQuote<T> {
-	quoteData: T
+interface UseCachedQuote<T> {
+	quoteData: T | null
 	status: 'pending' | 'success' | 'error'
 	error: string | null
 	onResolve: (data: any) => void
 	onReject: (error: any) => void
 }
 
-export function useQuote<T>(
-	quotePromiseFn: () => Promise<T | undefined>
-): UseQuote<T> {
-	const [quoteData, setQuoteData] = useState<any>(null)
+const cacheKey = 'quote'
+
+export function useCachedQuoteSometimes<T>(
+	quotePromiseFn: () => Promise<T>
+): UseCachedQuote<T> {
+	const [quoteData, setQuoteData] = useState<T | null>(null)
 	const [status, setStatus] = useState<'pending' | 'success' | 'error'>(
 		'pending'
 	)
@@ -20,28 +22,42 @@ export function useQuote<T>(
 	const fetchQuote = useCallback(async () => {
 		setStatus('pending')
 		setError(null)
+
 		try {
 			const response = await quotePromiseFn()
 			setQuoteData(response)
+			localStorage.setItem(cacheKey, JSON.stringify(response))
 			setStatus('success')
-			onReject(response)
+			onResolve(response)
 		} catch (err: any) {
 			setError(err.message || 'An error occurred while fetching the quote.')
 			setStatus('error')
-			onReject(err)
+			const cachedData = localStorage.getItem(cacheKey)
+			if (cachedData) {
+				setQuoteData(JSON.parse(cachedData))
+				setStatus('success')
+			} else {
+				onReject(err)
+			}
 		}
-	}, [quotePromiseFn])
+	}, [quotePromiseFn, cacheKey])
 
 	useEffect(() => {
-		fetchQuote()
-	}, [fetchQuote])
+		const cachedData = localStorage.getItem(cacheKey)
+		if (cachedData) {
+			setQuoteData(JSON.parse(cachedData))
+			setStatus('success')
+		} else {
+			fetchQuote()
+		}
+	}, [fetchQuote, cacheKey])
 
 	const onResolve = (data: any) => {
 		console.log(data)
 	}
 
 	const onReject = (error: any) => {
-		console.log(error)
+		console.error(error)
 	}
 
 	return { quoteData, status, error, onResolve, onReject }
