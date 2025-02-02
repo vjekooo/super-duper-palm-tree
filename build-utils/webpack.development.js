@@ -30,6 +30,7 @@ module.exports = env => ({
 		hot: true,
 		port: port,
 		client: {
+			overlay: false,
 			progress: true,
 			logging: 'warn'
 		}
