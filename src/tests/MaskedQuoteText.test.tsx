@@ -9,9 +9,18 @@ describe('MaskedQuoteText', () => {
 
 		render(<MaskedQuoteText base={base} revealed={revealed} />)
 
-		expect(screen.getByText('T')).toBeInTheDocument()
-		expect(screen.getByText('Q')).toBeInTheDocument()
-		expect(screen.getByText('o')).toBeInTheDocument()
+		expect(screen.queryByText('T')).toBeInTheDocument()
+		expect(screen.queryByText('Q')).toBeInTheDocument()
+		expect(screen.queryByText('o')).toBeInTheDocument()
+
+		expect(screen.queryByText('e')).not.toBeInTheDocument()
+		expect(screen.queryByText('s')).not.toBeInTheDocument()
+		expect(screen.queryByText('t')).not.toBeInTheDocument()
+		expect(screen.queryByText('u')).not.toBeInTheDocument()
+		expect(screen.queryByText('t')).not.toBeInTheDocument()
+
+		const underscores = screen.queryAllByText('_')
+		expect(underscores.length).toEqual(6)
 
 		jest.resetAllMocks()
 	})
