@@ -16,10 +16,6 @@
 		"type": "git",
 		"url": "https://github.com/vjekooo/webpack_react"
 	},
-	"engines": {
-		"node": ">=20.5.0"
-	},
-
 	"bugs": "https://github.com/vjekooo/webpack_react/issues",
 	"keywords": [
 		"react",
