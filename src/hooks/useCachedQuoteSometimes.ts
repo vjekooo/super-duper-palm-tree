@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 import { Quote } from '../lib/types'
 import {
 	getRandomQuoteFromLocalStorage,
@@ -24,7 +24,7 @@ export function useCachedQuoteSometimes<T>(
 	)
 	const [error, setError] = useState<string | null>(null)
 
-	const fetchQuote = useCallback(async () => {
+	const fetchQuote = async () => {
 		setStatus('pending')
 		setError(null)
 
@@ -46,17 +46,11 @@ export function useCachedQuoteSometimes<T>(
 				onReject(err)
 			}
 		}
-	}, [quotePromiseFn, cacheKey])
+	}
 
 	useEffect(() => {
-		const cachedData = localStorage.getItem(cacheKey)
-		if (cachedData) {
-			setQuoteData(JSON.parse(cachedData))
-			setStatus('success')
-		} else {
-			fetchQuote()
-		}
-	}, [fetchQuote, cacheKey])
+		fetchQuote()
+	}, [quotePromiseFn, cacheKey])
 
 	const onResolve = (data: Quote) => {
 		console.log(data)

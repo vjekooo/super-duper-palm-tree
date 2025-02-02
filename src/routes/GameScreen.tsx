@@ -9,12 +9,6 @@ const Container = styled.div`
 	gap: 5px;
 `
 
-interface Quote {
-	_id: string
-	content: string
-	length: number
-}
-
 const url = 'http://api.quotable.io/random'
 
 const fetchQuote = async () => {
@@ -23,18 +17,12 @@ const fetchQuote = async () => {
 }
 
 export const GameScreen: React.FC = () => {
-	const { quoteData, status, error } = useQuote<Quote>(fetchQuote)
-
-	const quote = {
-		quoteId: quoteData?._id,
-		content: quoteData?.content,
-		length: quoteData?.length
-	}
+	const { quoteData, status, error } = useQuote(fetchQuote)
 
 	return (
 		<Container>
 			<div>{status === 'pending' && 'Loading...'}</div>
-			{status === 'success' && <Game quote={quote} />}
+			{quoteData && <Game quote={quoteData} />}
 			<div>{error ? 'Something went wrong' : ''}</div>
 		</Container>
 	)

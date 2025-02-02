@@ -1,23 +1,22 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect } from 'react'
+import { Quote } from '../lib/types'
 
-interface UseQuote<T> {
-	quoteData: T
+interface UseQuote {
+	quoteData: Quote | null
 	status: 'pending' | 'success' | 'error'
 	error: string | null
 	onResolve: (data: any) => void
 	onReject: (error: any) => void
 }
 
-export function useQuote<T>(
-	quotePromiseFn: () => Promise<T | undefined>
-): UseQuote<T> {
-	const [quoteData, setQuoteData] = useState<any>(null)
+export function useQuote(quotePromiseFn: () => Promise<Quote>): UseQuote {
+	const [quoteData, setQuoteData] = useState<Quote | null>(null)
 	const [status, setStatus] = useState<'pending' | 'success' | 'error'>(
 		'pending'
 	)
 	const [error, setError] = useState<string | null>(null)
 
-	const fetchQuote = useCallback(async () => {
+	const fetchQuote = async () => {
 		setStatus('pending')
 		setError(null)
 		try {
@@ -30,13 +29,13 @@ export function useQuote<T>(
 			setStatus('error')
 			onReject(err)
 		}
-	}, [quotePromiseFn])
+	}
 
 	useEffect(() => {
 		fetchQuote()
-	}, [fetchQuote])
+	}, [quotePromiseFn])
 
-	const onResolve = (data: any) => {
+	const onResolve = (data: Quote) => {
 		console.log(data)
 	}
 

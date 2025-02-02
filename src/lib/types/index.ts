@@ -1,5 +1,5 @@
 export interface Quote {
-	quoteId: string
+	_id: string
 	content: string
 	length: number
 }

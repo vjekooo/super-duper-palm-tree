@@ -9,7 +9,7 @@ describe('setQuoteToLocalStorage', () => {
 	it('should store a Quote object in localStorage under the specified cache key', () => {
 		const cacheKey = 'testCacheKey'
 		const quote: Quote = {
-			quoteId: 'Hte',
+			_id: 'Hte',
 			content: 'This is a test quote',
 			length: 16
 		}
@@ -27,7 +27,7 @@ describe('setQuoteToLocalStorage', () => {
 	it('should append to existing data in localStorage', () => {
 		const cacheKey = 'testCacheKey'
 		const quote: Quote = {
-			quoteId: 'Hte',
+			_id: 'Hte',
 			content: 'This is a test quote',
 			length: 16
 		}
@@ -38,7 +38,7 @@ describe('setQuoteToLocalStorage', () => {
 		expect(storedData).not.toBeNull()
 
 		const quote2: Quote = {
-			quoteId: 'LOpe',
+			_id: 'LOpe',
 			content: 'This is another test quote',
 			length: 20
 		}
@@ -57,7 +57,7 @@ describe('setQuoteToLocalStorage', () => {
 	it('should handle cases where localStorage key is empty', () => {
 		const cacheKey = 'emptyCacheKey'
 		const quote: Quote = {
-			quoteId: 'LOpe',
+			_id: 'LOpe',
 			content: 'This is another test quote',
 			length: 20
 		}

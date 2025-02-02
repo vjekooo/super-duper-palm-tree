@@ -1,5 +1,5 @@
-import { Quote } from './types'
-import { getRandomQuoteFromLocalStorage } from './utils'
+import { Quote } from '../lib/types'
+import { getRandomQuoteFromLocalStorage } from '../lib/utils'
 
 describe('getRandomQuoteFromLocalStorage', () => {
 	beforeEach(() => {
@@ -10,9 +10,9 @@ describe('getRandomQuoteFromLocalStorage', () => {
 		const cacheKey = 'testCacheKey'
 
 		const quotes: Quote[] = [
-			{ quoteId: 'Hjhj', content: 'First quote', length: 12 },
-			{ quoteId: 'GssB', content: 'Second quote', length: 15 },
-			{ quoteId: 'Gjkk', content: 'Third quote', length: 11 }
+			{ _id: 'Hjhj', content: 'First quote', length: 12 },
+			{ _id: 'GssB', content: 'Second quote', length: 15 },
+			{ _id: 'Gjkk', content: 'Third quote', length: 11 }
 		]
 
 		localStorage.setItem(cacheKey, JSON.stringify(quotes))
