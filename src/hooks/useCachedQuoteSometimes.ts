@@ -1,7 +1,12 @@
 import { useState, useEffect, useCallback } from 'react'
+import { Quote } from '../lib/types'
+import {
+	getRandomQuoteFromLocalStorage,
+	setQuoteToLocalStorage
+} from '../lib/utils'
 
-interface UseCachedQuote<T> {
-	quoteData: T | null
+interface UseCachedQuote {
+	quoteData: Quote | null
 	status: 'pending' | 'success' | 'error'
 	error: string | null
 	onResolve: (data: any) => void
@@ -11,9 +16,9 @@ interface UseCachedQuote<T> {
 const cacheKey = 'quote'
 
 export function useCachedQuoteSometimes<T>(
-	quotePromiseFn: () => Promise<T>
-): UseCachedQuote<T> {
-	const [quoteData, setQuoteData] = useState<T | null>(null)
+	quotePromiseFn: () => Promise<Quote>
+): UseCachedQuote {
+	const [quoteData, setQuoteData] = useState<Quote | null>(null)
 	const [status, setStatus] = useState<'pending' | 'success' | 'error'>(
 		'pending'
 	)
@@ -26,7 +31,7 @@ export function useCachedQuoteSometimes<T>(
 		try {
 			const response = await quotePromiseFn()
 			setQuoteData(response)
-			localStorage.setItem(cacheKey, JSON.stringify(response))
+			setQuoteToLocalStorage(cacheKey, response)
 			setStatus('success')
 			onResolve(response)
 		} catch (err: any) {
@@ -34,7 +39,8 @@ export function useCachedQuoteSometimes<T>(
 			setStatus('error')
 			const cachedData = localStorage.getItem(cacheKey)
 			if (cachedData) {
-				setQuoteData(JSON.parse(cachedData))
+				const randomQuote = getRandomQuoteFromLocalStorage(cacheKey)
+				setQuoteData(randomQuote)
 				setStatus('success')
 			} else {
 				onReject(err)
@@ -52,7 +58,7 @@ export function useCachedQuoteSometimes<T>(
 		}
 	}, [fetchQuote, cacheKey])
 
-	const onResolve = (data: T) => {
+	const onResolve = (data: Quote) => {
 		console.log(data)
 	}
 

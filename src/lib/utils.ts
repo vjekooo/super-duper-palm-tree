@@ -1,3 +1,5 @@
+import { Quote } from './types'
+
 /**
  * Calculates the number of unique characters (letters only) in a given sentence.
  *
@@ -70,4 +72,15 @@ export const transformSentence = (
 			return guessedLetters.includes(char) ? ` ${char} ` : '_'
 		}
 	})
+}
+
+export const setQuoteToLocalStorage = (cacheKey: string, data: Quote): void => {
+	const cachedData = localStorage.getItem(cacheKey)
+	localStorage.setItem(cacheKey, JSON.stringify([data, cachedData]))
+}
+
+export const getRandomQuoteFromLocalStorage = (cacheKey: string): Quote => {
+	const cachedData = localStorage.getItem(cacheKey)
+	const data = cachedData ? JSON.parse(cachedData) : null
+	return data.length > 0 ? data[Math.floor(Math.random() * data.length)] : null
 }

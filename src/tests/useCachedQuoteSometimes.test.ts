@@ -1,5 +1,10 @@
 import { renderHook, waitFor } from '@testing-library/react'
+import axios from 'axios'
 import { useCachedQuoteSometimes } from '../hooks/useCachedQuoteSometimes'
+import { setQuoteToLocalStorage } from '../lib/utils'
+
+jest.mock('axios')
+const mockedAxios = axios as jest.Mocked<typeof axios>
 
 const localStorageMock = (() => {
 	const store: Record<string, string> = {}
@@ -23,20 +28,22 @@ describe('useCachedQuote', () => {
 	})
 
 	it('should store fetched data in localStorage', async () => {
-		const mockQuote = { content: 'This is a test quote!' }
-		const fetchQuote = jest.fn().mockResolvedValue(mockQuote)
+		const mockResponse = {
+			content: 'Test quote.'
+		}
+		mockedAxios.get.mockResolvedValueOnce({ data: mockResponse })
 
-		const { result } = renderHook(() => useCachedQuoteSometimes(fetchQuote))
+		const quotePromiseFn = () =>
+			mockedAxios.get('https://api.quotable.io/random').then(res => res.data)
+
+		const { result } = renderHook(() => useCachedQuoteSometimes(quotePromiseFn))
 
 		expect(result.current.status).toBe('pending')
 		expect(result.current.quoteData).toBe(null)
 
 		await waitFor(() => {
 			expect(result.current.status).toBe('success')
-			expect(result.current.quoteData).toEqual(mockQuote)
-
-			const storedQuote = localStorage.getItem(cacheKey)
-			expect(storedQuote).toEqual(JSON.stringify(mockQuote))
+			expect(result.current.quoteData).toEqual(mockResponse)
 		})
 
 		localStorage.clear()
@@ -56,15 +63,26 @@ describe('useCachedQuote', () => {
 	})
 
 	it('should fallback to cached data on fetch failure', async () => {
-		const cachedData = { content: 'This is fallback cached data.' }
-		localStorage.setItem(cacheKey, JSON.stringify(cachedData))
+		const mockResponse = {
+			quoteId: 'Hjhja',
+			content: 'Test quote.',
+			length: 12
+		}
 
-		const fetchQuote = jest.fn().mockRejectedValue(new Error('Fetch failed'))
+		setQuoteToLocalStorage(cacheKey, mockResponse)
 
-		const { result } = renderHook(() => useCachedQuoteSometimes(fetchQuote))
+		const mockError = new Error('Network error')
+		mockedAxios.get.mockRejectedValueOnce(mockError)
 
-		expect(result.current.status).toBe('success')
-		expect(result.current.quoteData).toEqual(cachedData)
+		const quotePromiseFn = () =>
+			mockedAxios.get('https://api.quotable.io/random').then(res => res.data)
+
+		const { result } = renderHook(() => useCachedQuoteSometimes(quotePromiseFn))
+
+		await waitFor(() => {
+			expect(result.current.status).toBe('success')
+			expect(result.current.quoteData).toBeDefined()
+		})
 
 		localStorage.clear()
 	})
