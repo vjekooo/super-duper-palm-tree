@@ -18,6 +18,7 @@ interface Props {
 }
 
 const MAX_ATTEMPTS = 6
+const SECONDS_TO_MILLIS = 1000
 
 const url =
 	'https://my-json-server.typicode.com/stanko-ingemark/hang_the_wise_man_frontend_task/highscores'
@@ -41,7 +42,7 @@ export const Game = ({ quote }: Props) => {
 
 	const timeElapsed = useTimer(gameOver)
 
-	const handleGuess = (letter: string) => {
+	const onGuess = (letter: string) => {
 		const lowerCaseLetter = letter.toLowerCase()
 		const upperCaseLetter = letter.toUpperCase()
 
@@ -57,9 +58,7 @@ export const Game = ({ quote }: Props) => {
 		.every(
 			char => char === ' ' || !/[a-zA-Z]/.test(char) || guessedLetters.includes(char)
 		)
-
 	const isLoser = wrongGuesses >= MAX_ATTEMPTS
-
 	const livesLeft = MAX_ATTEMPTS - wrongGuesses
 
 	useEffect(() => {
@@ -76,7 +75,7 @@ export const Game = ({ quote }: Props) => {
 				uniqueCharacters: calculateNumberOfUniqueCharacters(sentence),
 				userName,
 				errors: wrongGuesses,
-				duration: timeElapsed * 1000
+				duration: timeElapsed * SECONDS_TO_MILLIS
 			}
 			sendGameData(postData)
 				.then(() => {
@@ -96,7 +95,7 @@ export const Game = ({ quote }: Props) => {
 			<Alphabet
 				letters={letters}
 				guessedLetters={guessedLetters}
-				handleGuess={handleGuess}
+				onGuess={onGuess}
 			/>
 			<div>You have: {livesLeft} lives left</div>
 			<div>{isWinner ? 'Your win' : ''}</div>
