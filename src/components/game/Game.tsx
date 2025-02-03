@@ -44,7 +44,7 @@ export const Game = ({ quote }: Props) => {
 	const isLoser = wrongGuesses >= MAX_ATTEMPTS
 	const livesLeft = MAX_ATTEMPTS - wrongGuesses
 
-	const gameOver = !isWinner || !isLoser
+	const gameOver = isWinner || isLoser
 
 	const timeElapsed = useTimer(gameOver)
 
@@ -79,7 +79,7 @@ export const Game = ({ quote }: Props) => {
 	}
 
 	useEffect(() => {
-		if (gameOver) {
+		if (gameOver && isWinner) {
 			handleGameOver()
 		}
 	}, [gameOver])
