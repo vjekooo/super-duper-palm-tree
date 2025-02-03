@@ -12,7 +12,8 @@ export const NameForm: React.FC = () => {
 
 	const dispatch = useDispatch()
 
-	const submitName = () => {
+	const submitName = (e: React.FormEvent) => {
+		e.preventDefault()
 		if (!name) {
 			if (inputRef.current) {
 				inputRef.current.focus()
@@ -27,15 +28,15 @@ export const NameForm: React.FC = () => {
 	return (
 		<Container>
 			<label>Name</label>
-			<div>
+			<form onSubmit={submitName}>
 				<Input
 					ref={inputRef}
 					value={name}
 					onChange={e => setName(e.target.value)}
 					placeholder="Please enter your name"
 				/>
-				<Button onClick={() => submitName()}>Submit</Button>
-			</div>
+				<Button type="submit">Submit</Button>
+			</form>
 		</Container>
 	)
 }
