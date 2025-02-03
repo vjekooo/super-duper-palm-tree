@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useTimer } from '../../hooks/useTimer'
 
-import { Container } from './Game.styled'
+import { Container, Stack, Text } from './Game.styled'
 import { $fetch } from '../../lib/fetch'
 import { MessageResponse, Quote } from '../../lib/types'
 import {
@@ -61,45 +61,47 @@ export const Game = ({ quote }: Props) => {
 	const isLoser = wrongGuesses >= MAX_ATTEMPTS
 	const livesLeft = MAX_ATTEMPTS - wrongGuesses
 
+	const handleGameOver = () => {
+		const postData = {
+			quoteId: quote._id,
+			length: quote.length,
+			uniqueCharacters: calculateNumberOfUniqueCharacters(sentence),
+			userName,
+			errors: wrongGuesses,
+			duration: timeElapsed * SECONDS_TO_MILLIS
+		}
+
+		sendGameData(postData)
+			.then(() => {
+				showToast('Your score has been saved')
+			})
+			.catch(error => {
+				showToast(error.message || 'Something went wrong')
+			})
+	}
+
 	useEffect(() => {
 		if (isWinner || isLoser) {
 			setGameOver(true)
+			handleGameOver()
 		}
 	}, [isWinner, isLoser])
-
-	useEffect(() => {
-		if (gameOver) {
-			const postData = {
-				quoteId: quote._id,
-				length: quote.length,
-				uniqueCharacters: calculateNumberOfUniqueCharacters(sentence),
-				userName,
-				errors: wrongGuesses,
-				duration: timeElapsed * SECONDS_TO_MILLIS
-			}
-			sendGameData(postData)
-				.then(() => {
-					showToast('Your score has been saved')
-				})
-				.catch(error => {
-					showToast(error.message || 'Something went wrong')
-				})
-		}
-	}, [gameOver])
 
 	return (
 		<Container>
 			<ToastComponent />
-			<div>Time elapsed: {timeElapsed} seconds</div>
+			<Text>Time elapsed: {timeElapsed} seconds</Text>
 			<MaskedQuoteText base={sentence} revealed={guessedLetters} />
 			<Alphabet
 				letters={letters}
 				guessedLetters={guessedLetters}
 				onGuess={onGuess}
 			/>
-			<div>You have: {livesLeft} lives left</div>
-			<div>{isWinner ? 'Your win' : ''}</div>
-			<div>{isLoser ? 'Your lose' : ''}</div>
+			<Stack>
+				<Text>You have: {livesLeft} lives left</Text>
+				{isWinner && <Text>You won!</Text>}
+				{isLoser && <Text>You lost!</Text>}
+			</Stack>
 		</Container>
 	)
 }

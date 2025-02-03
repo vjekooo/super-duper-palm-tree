@@ -6,6 +6,12 @@ export const Container = styled.div`
 	gap: 20px;
 `
 
+export const Stack = styled.div`
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+`
+
 export const LetterList = styled.div`
 	display: flex;
 	width: 100%;
@@ -22,4 +28,9 @@ export const Letter = styled.div<{ $disabled?: boolean }>`
 	height: 35px;
 	background: ${props => (props.$disabled ? 'salmon' : '#ccc')};
 	color: ${props => (props.$disabled ? '#000' : 'white')};
+`
+
+export const Text = styled.p`
+	font-size: 18px;
+	margin: 0;
 `

@@ -9,12 +9,13 @@ export const Container = styled.div`
 `
 
 export const UserName = styled.div`
-	font-size: 16px;
+	font-size: 20px;
 	font-weight: bold;
 	margin-right: auto;
 `
 
 export const StyledLink = styled(Link)<{ $isActive: boolean }>`
+	font-size: 20px;
 	color: ${props => (props.$isActive ? 'blue' : 'gray')};
 	text-decoration: ${props => (props.$isActive ? 'underline' : 'none')};
 `

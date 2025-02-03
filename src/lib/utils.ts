@@ -40,7 +40,7 @@ export const calculateScore = (
 }
 
 /**
- * Generates an array of alphabet letters from 'a' to 'z'.
+ * Generates an array of alphabet letters from 'A' to 'Z'.
  *
  * @returns {string[]}
  */
