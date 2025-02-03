@@ -34,6 +34,6 @@ export function useToast() {
 			)}
 		</>
 	)
-
+	// decouple UI from hook, this way makes it less reusable
 	return { ToastComponent, showToast }
 }
