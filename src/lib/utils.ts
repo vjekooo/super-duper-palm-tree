@@ -96,3 +96,27 @@ export const getRandomQuoteFromLocalStorage = (cacheKey: string): Quote => {
 	const data = cachedData ? JSON.parse(cachedData) : null
 	return data?.length > 0 ? data[Math.floor(Math.random() * data.length)] : null
 }
+
+const CHECK_ALPHABETIC = /[a-zA-Z]/
+
+/**
+ * Checks if the player has guessed all alphabetic letters in the sentence correctly.
+ *
+ * The function verifies that all alphabetic characters are accounted for in the
+ * guessed letters while non-alphabetic characters and spaces are ignored.
+ *
+ * @param {string} sentence - The original sentence to check.
+ * @param {string[]} guessedLetters - An array of guessed letters.
+ * @returns {boolean} Returns true if all alphabetic letters have been guessed correctly, otherwise false.
+ */
+export const checkIfWinner = (
+	sentence: string,
+	guessedLetters: string[]
+): boolean => {
+	return sentence
+		?.split('')
+		.every(
+			char =>
+				char === ' ' || !CHECK_ALPHABETIC.test(char) || guessedLetters.includes(char)
+		)
+}

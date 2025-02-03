@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react'
 
-export const useTimer = (gameOver: boolean) => {
+export const useTimer = (isActive: boolean) => {
 	const [timeElapsed, setTimeElapsed] = useState(0)
 
 	useEffect(() => {
 		let timer: NodeJS.Timeout | null = null
 
-		if (!gameOver) {
+		if (!isActive) {
 			timer = setInterval(() => {
 				setTimeElapsed(prev => prev + 1)
 			}, 1000)
@@ -15,7 +15,7 @@ export const useTimer = (gameOver: boolean) => {
 		return () => {
 			if (timer) clearInterval(timer)
 		}
-	}, [gameOver])
+	}, [isActive])
 
 	return timeElapsed
 }

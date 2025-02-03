@@ -7,6 +7,7 @@ import { $fetch } from '../../lib/fetch'
 import { MessageResponse, Quote } from '../../lib/types'
 import {
 	calculateNumberOfUniqueCharacters,
+	checkIfWinner,
 	generateAlphabetLetters
 } from '../../lib/utils'
 import { useToast } from '../../hooks/useToast'
@@ -38,7 +39,12 @@ export const Game = ({ quote }: Props) => {
 	const [sentence] = useState(quote.content)
 	const [guessedLetters, setGuessedLetters] = useState<string[]>([])
 	const [wrongGuesses, setWrongGuesses] = useState(0)
-	const [gameOver, setGameOver] = useState(false)
+
+	const isWinner = checkIfWinner(sentence, guessedLetters)
+	const isLoser = wrongGuesses >= MAX_ATTEMPTS
+	const livesLeft = MAX_ATTEMPTS - wrongGuesses
+
+	const gameOver = !isWinner || !isLoser
 
 	const timeElapsed = useTimer(gameOver)
 
@@ -52,14 +58,6 @@ export const Game = ({ quote }: Props) => {
 			setWrongGuesses(prev => prev + 1)
 		}
 	}
-
-	const isWinner = sentence
-		?.split('')
-		.every(
-			char => char === ' ' || !/[a-zA-Z]/.test(char) || guessedLetters.includes(char)
-		)
-	const isLoser = wrongGuesses >= MAX_ATTEMPTS
-	const livesLeft = MAX_ATTEMPTS - wrongGuesses
 
 	const handleGameOver = () => {
 		const postData = {
@@ -81,11 +79,10 @@ export const Game = ({ quote }: Props) => {
 	}
 
 	useEffect(() => {
-		if (isWinner || isLoser) {
-			setGameOver(true)
+		if (gameOver) {
 			handleGameOver()
 		}
-	}, [isWinner, isLoser])
+	}, [gameOver])
 
 	return (
 		<Container>
