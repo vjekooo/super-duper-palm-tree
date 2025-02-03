@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useTimer } from '../../hooks/useTimer'
 
-import { Container, Stack, Text } from './Game.styled'
+import { Container, FlexBetween, ResetButton, Stack, Text } from './Game.styled'
 import { $fetch } from '../../lib/fetch'
 import { MessageResponse, Quote } from '../../lib/types'
 import {
@@ -16,6 +16,7 @@ import { Alphabet } from './Alphabet'
 
 interface Props {
 	quote: Quote
+	onReset: () => void
 }
 
 const MAX_ATTEMPTS = 6
@@ -31,7 +32,7 @@ const sendGameData = async (postData: any) => {
 
 const letters = generateAlphabetLetters()
 
-export const Game = ({ quote }: Props) => {
+export const Game = ({ quote, onReset }: Props) => {
 	const userName = useSelector((state: any) => state.user.userName)
 
 	const { ToastComponent, showToast } = useToast()
@@ -87,7 +88,10 @@ export const Game = ({ quote }: Props) => {
 	return (
 		<Container>
 			<ToastComponent />
-			<Text>Time elapsed: {timeElapsed} seconds</Text>
+			<FlexBetween>
+				<Text>Time elapsed: {timeElapsed} seconds</Text>
+				<ResetButton onClick={onReset}>Reset</ResetButton>
+			</FlexBetween>
 			<MaskedQuoteText base={sentence} revealed={guessedLetters} />
 			<Alphabet
 				letters={letters}

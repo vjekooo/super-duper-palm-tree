@@ -3,7 +3,7 @@ import styled from 'styled-components'
 export const Container = styled.div`
 	display: flex;
 	flex-direction: column;
-	gap: 20px;
+	gap: 50px;
 `
 
 export const Stack = styled.div`
@@ -33,4 +33,18 @@ export const Letter = styled.div<{ $disabled?: boolean }>`
 export const Text = styled.p`
 	font-size: 18px;
 	margin: 0;
+`
+
+export const FlexBetween = styled.div`
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+`
+
+export const ResetButton = styled.button`
+	padding: 10px;
+	background: salmon;
+	color: white;
+	border: none;
+	cursor: pointer;
 `

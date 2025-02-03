@@ -4,7 +4,6 @@ export const Container = styled.div`
 	display: flex;
 	gap: 10px;
 	width: 100%;
-	margin-bottom: 50px;
 `
 
 export const QuoteContainer = styled.div`

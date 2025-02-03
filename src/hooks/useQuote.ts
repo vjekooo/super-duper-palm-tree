@@ -5,6 +5,7 @@ interface UseQuote {
 	quoteData: Quote | null
 	status: 'pending' | 'success' | 'error'
 	error: string | null
+	reFetch: () => void
 	onResolve: (data: any) => void
 	onReject: (error: any) => void
 }
@@ -21,7 +22,7 @@ export function useQuote(quotePromiseFn: () => Promise<Quote>): UseQuote {
 			const response = await quotePromiseFn()
 			setQuoteData(response)
 			setStatus('success')
-			onReject(response)
+			onResolve(response)
 		} catch (err: any) {
 			setError(err.message || 'An error occurred while fetching the quote.')
 			setStatus('error')
@@ -41,5 +42,5 @@ export function useQuote(quotePromiseFn: () => Promise<Quote>): UseQuote {
 		console.log(error)
 	}
 
-	return { quoteData, status, error, onResolve, onReject }
+	return { quoteData, status, error, reFetch: fetchQuote, onResolve, onReject }
 }
