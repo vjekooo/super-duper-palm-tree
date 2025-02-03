@@ -1,7 +1,6 @@
 ### To run
 
-- Have node installed. Everything above 20 should work.
-- Made the task on 20.18.1
+- Have node installed. Everything above 20 should work (worked on 20.18.1)
 
 - Clone the project:
 
@@ -28,3 +27,7 @@ Wait for the browser to open
 ```
 yarn test
 ```
+
+### Live version on AWS
+
+https://main.dqqpc2npfa20n.amplifyapp.com/
