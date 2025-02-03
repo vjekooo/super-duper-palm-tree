@@ -1,29 +1,10 @@
-import styled from 'styled-components'
-import { Game } from '../components/game/Game'
-import axios from 'axios'
-import { useQuote } from '../hooks/useQuote'
+import ErrorBoundary from '../components/ErrorBoundary'
+import { GameDataFetch } from '../components/game/GameDataFetch'
 
-const Container = styled.div`
-	display: flex;
-	flex-direction: column;
-	gap: 5px;
-`
-
-const url = 'http://api.quotable.io/random'
-
-const fetchQuote = async () => {
-	const response = await axios.get(url)
-	return response.data
-}
-
-export const GameScreen: React.FC = () => {
-	const { quoteData, status, error } = useQuote(fetchQuote)
-
+export const GameScreen = () => {
 	return (
-		<Container>
-			<div>{status === 'pending' && 'Loading...'}</div>
-			{quoteData && <Game quote={quoteData} />}
-			<div>{error ? 'Something went wrong' : ''}</div>
-		</Container>
+		<ErrorBoundary fallback={<div>Something went wrong</div>}>
+			<GameDataFetch />
+		</ErrorBoundary>
 	)
 }

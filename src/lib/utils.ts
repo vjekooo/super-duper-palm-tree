@@ -35,9 +35,7 @@ export const calculateScore = (
 
 	return Math.max(
 		0,
-		Math.round(
-			((length * 2 + uniqueLetters) * 100) / ((1 + errors) * timeInSeconds)
-		)
+		Math.round(((length * 2 + uniqueLetters) * 100) / ((1 + errors) * timeInSeconds))
 	)
 }
 

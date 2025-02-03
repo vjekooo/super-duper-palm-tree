@@ -11,9 +11,7 @@ interface UseQuote {
 
 export function useQuote(quotePromiseFn: () => Promise<Quote>): UseQuote {
 	const [quoteData, setQuoteData] = useState<Quote | null>(null)
-	const [status, setStatus] = useState<'pending' | 'success' | 'error'>(
-		'pending'
-	)
+	const [status, setStatus] = useState<'pending' | 'success' | 'error'>('pending')
 	const [error, setError] = useState<string | null>(null)
 
 	const fetchQuote = async () => {

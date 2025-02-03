@@ -27,7 +27,7 @@
 		"tabWidth": 2,
 		"semi": false,
 		"singleQuote": true,
-		"printWidth": 80,
+		"printWidth": 85,
 		"bracketSpacing": true,
 		"arrowParens": "avoid"
 	},
@@ -98,6 +98,6 @@
 		"react-redux": "^9.2.0",
 		"react-router-dom": "^6.4.3",
 		"redux": "^5.0.1",
-		"styled-components": "^5.3.6"
+		"styled-components": "^6.1.14"
 	}
 }

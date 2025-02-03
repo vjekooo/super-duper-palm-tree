@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
@@ -25,11 +25,20 @@ const Input = styled.input`
 
 export const HomeScreen: React.FC = () => {
 	const navigate = useNavigate()
+	const inputRef = useRef<HTMLInputElement>(null)
+
 	const [name, setName] = useState('')
 
 	const dispatch = useDispatch()
 
 	const submitName = () => {
+		if (!name) {
+			if (inputRef.current) {
+				inputRef.current.focus()
+			}
+			return
+		}
+
 		dispatch(setUserName(name))
 		navigate('/game')
 	}
@@ -39,13 +48,12 @@ export const HomeScreen: React.FC = () => {
 			<label>Name</label>
 			<div>
 				<Input
+					ref={inputRef}
 					value={name}
 					onChange={e => setName(e.target.value)}
 					placeholder="Please enter your name"
 				/>
-				<Button onClick={() => submitName()} disabled={!name}>
-					Submit
-				</Button>
+				<Button onClick={() => submitName()}>Submit</Button>
 			</div>
 		</Container>
 	)

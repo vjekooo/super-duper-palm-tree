@@ -54,8 +54,7 @@ export const Game = ({ quote }: Props) => {
 	const isWinner = sentence
 		?.split('')
 		.every(
-			char =>
-				char === ' ' || !/[a-zA-Z]/.test(char) || guessedLetters.includes(char)
+			char => char === ' ' || !/[a-zA-Z]/.test(char) || guessedLetters.includes(char)
 		)
 
 	const isLoser = wrongGuesses >= MAX_ATTEMPTS
