@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useTimer } from '../../hooks/useTimer'
 
-import { Alphabet, Container, Letter } from './Game.styled'
+import { Container } from './Game.styled'
 import { $fetch } from '../../lib/fetch'
 import { MessageResponse, Quote } from '../../lib/types'
 import {
@@ -11,6 +11,7 @@ import {
 } from '../../lib/utils'
 import { useToast } from '../../hooks/useToast'
 import { MaskedQuoteText } from '../maskedQuoteText/MaskedQuoteText'
+import { Alphabet } from './Alphabet'
 
 interface Props {
 	quote: Quote
@@ -59,6 +60,8 @@ export const Game = ({ quote }: Props) => {
 
 	const isLoser = wrongGuesses >= MAX_ATTEMPTS
 
+	const livesLeft = MAX_ATTEMPTS - wrongGuesses
+
 	useEffect(() => {
 		if (isWinner || isLoser) {
 			setGameOver(true)
@@ -90,18 +93,12 @@ export const Game = ({ quote }: Props) => {
 			<ToastComponent />
 			<div>Time elapsed: {timeElapsed} seconds</div>
 			<MaskedQuoteText base={sentence} revealed={guessedLetters} />
-			<Alphabet>
-				{letters.map(letter => (
-					<Letter
-						key={letter}
-						$disabled={guessedLetters.includes(letter)}
-						onClick={() => handleGuess(letter)}
-					>
-						<span>{letter}</span>
-					</Letter>
-				))}
-			</Alphabet>
-			<div>You have: {MAX_ATTEMPTS - wrongGuesses} lives left</div>
+			<Alphabet
+				letters={letters}
+				guessedLetters={guessedLetters}
+				handleGuess={handleGuess}
+			/>
+			<div>You have: {livesLeft} lives left</div>
 			<div>{isWinner ? 'Your win' : ''}</div>
 			<div>{isLoser ? 'Your lose' : ''}</div>
 		</Container>

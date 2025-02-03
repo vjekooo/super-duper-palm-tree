@@ -6,8 +6,10 @@ export const Container = styled.div`
 	gap: 20px;
 `
 
-export const Alphabet = styled.div`
+export const LetterList = styled.div`
 	display: flex;
+	width: 100%;
+	flex-wrap: wrap;
 	gap: 5px;
 `
 
