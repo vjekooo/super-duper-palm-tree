@@ -9,7 +9,7 @@ const Container = styled.div`
 	gap: 5px;
 `
 
-const url = 'http://api.quotable.io/random'
+const url = 'https://api.quotable.io/random'
 
 const fetchQuote = async () => {
 	const response = await axios.get(url)
