@@ -2,6 +2,8 @@ import axios from 'axios'
 import { useQuote } from '../../hooks/useQuote'
 import { Game } from './Game'
 import { Text } from './Game.styled'
+import { Loader } from '../loader/Loader'
+import { PendingWrapper } from '../loader/Loader.style'
 
 const url = 'https://api.quotable.io/random'
 
@@ -21,7 +23,7 @@ export const GameDataFetch: React.FC = () => {
 
 	return (
 		<>
-			<Text>{status === 'pending' ? 'Loading...' : ''}</Text>
+			<PendingWrapper>{status === 'pending' && <Loader />}</PendingWrapper>
 			{quoteData && <Game key={quoteData._id} quote={quoteData} onReset={onReset} />}
 			<Text>{error ? 'Something went wrong' : ''}</Text>
 		</>
