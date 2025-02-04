@@ -1,24 +1,10 @@
 import { renderHook, waitFor } from '@testing-library/react'
 import axios from 'axios'
 import { useCachedQuoteSometimes } from '../hooks/useCachedQuoteSometimes'
-import { setQuoteToLocalStorage } from '../lib/utils'
+import { getRandomQuoteFromLocalStorage, setQuoteToLocalStorage } from '../lib/utils'
 
 jest.mock('axios')
 const mockedAxios = axios as jest.Mocked<typeof axios>
-
-const localStorageMock = (() => {
-	const store: Record<string, string> = {}
-	return {
-		getItem: (key: string) => store[key] || null,
-		setItem: (key: string, value: string) => {
-			store[key] = value
-		},
-		clear: () => {
-			Object.keys(store).forEach(key => delete store[key])
-		}
-	}
-})()
-Object.defineProperty(window, 'localStorage', { value: localStorageMock })
 
 describe('useCachedQuote', () => {
 	const cacheKey = 'quote'
@@ -28,10 +14,10 @@ describe('useCachedQuote', () => {
 	})
 
 	it('should store fetched data in localStorage', async () => {
-		const mockResponse = {
+		const mockQuote = {
 			content: 'Test quote.'
 		}
-		mockedAxios.get.mockResolvedValueOnce({ data: mockResponse })
+		mockedAxios.get.mockResolvedValueOnce({ data: mockQuote })
 
 		const quotePromiseFn = () =>
 			mockedAxios.get('https://api.quotable.io/random').then(res => res.data)
@@ -42,8 +28,10 @@ describe('useCachedQuote', () => {
 		expect(result.current.quoteData).toBe(null)
 
 		await waitFor(() => {
+			const localQuote = getRandomQuoteFromLocalStorage(cacheKey)
 			expect(result.current.status).toBe('success')
-			expect(result.current.quoteData).toEqual(mockResponse)
+			expect(result.current.quoteData).toEqual(mockQuote)
+			expect(localQuote).toEqual(mockQuote)
 		})
 	})
 
@@ -61,13 +49,13 @@ describe('useCachedQuote', () => {
 	})
 
 	it('should fallback to cached data on fetch failure', async () => {
-		const mockResponse = {
+		const mockQuote = {
 			_id: 'Hjhja',
 			content: 'Test quote.',
 			length: 12
 		}
 
-		setQuoteToLocalStorage(cacheKey, mockResponse)
+		setQuoteToLocalStorage(cacheKey, mockQuote)
 
 		const mockError = new Error('Network error')
 		mockedAxios.get.mockRejectedValueOnce(mockError)
