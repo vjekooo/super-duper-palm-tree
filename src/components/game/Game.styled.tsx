@@ -28,6 +28,7 @@ export const Letter = styled.div<{ $disabled?: boolean }>`
 	height: 35px;
 	background: ${props => (props.$disabled ? 'salmon' : '#ccc')};
 	color: ${props => (props.$disabled ? '#000' : 'white')};
+	cursor: ${props => (props.$disabled ? 'not-allowed' : 'pointer')};
 `
 
 export const Text = styled.p`
@@ -47,4 +48,8 @@ export const ResetButton = styled.button`
 	color: white;
 	border: none;
 	cursor: pointer;
+`
+
+export const HangmanWrapper = styled.div`
+	text-align: center;
 `

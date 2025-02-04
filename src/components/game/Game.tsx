@@ -2,7 +2,14 @@ import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useTimer } from '../../hooks/useTimer'
 
-import { Container, FlexBetween, ResetButton, Stack, Text } from './Game.styled'
+import {
+	Container,
+	FlexBetween,
+	HangmanWrapper,
+	ResetButton,
+	Stack,
+	Text
+} from './Game.styled'
 import { $fetch } from '../../lib/fetch'
 import { MessageResponse, Quote } from '../../lib/types'
 import {
@@ -89,7 +96,9 @@ export const Game = ({ quote, onReset }: Props) => {
 	return (
 		<Container>
 			<ToastComponent />
-			<HangmanFigure wrongGuesses={wrongGuesses} />
+			<HangmanWrapper>
+				<HangmanFigure wrongGuesses={wrongGuesses} />
+			</HangmanWrapper>
 			<FlexBetween>
 				<Text>Time elapsed: {timeElapsed} seconds</Text>
 				<ResetButton onClick={onReset}>Reset</ResetButton>
@@ -98,6 +107,7 @@ export const Game = ({ quote, onReset }: Props) => {
 			<Alphabet
 				letters={letters}
 				guessedLetters={guessedLetters}
+				gameOver={gameOver}
 				onGuess={onGuess}
 			/>
 			<Stack>
