@@ -23,3 +23,12 @@ export interface Score {
 export interface MessageResponse {
 	message: string
 }
+
+export interface GameData {
+	quoteId: string
+	length: number
+	uniqueCharacters: number
+	userName: string
+	errors: number
+	duration: number
+}

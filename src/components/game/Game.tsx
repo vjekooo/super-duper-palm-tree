@@ -11,7 +11,7 @@ import {
 	Text
 } from './Game.styled'
 import { $fetch } from '../../lib/fetch'
-import { MessageResponse, Quote } from '../../lib/types'
+import { GameData, MessageResponse, Quote } from '../../lib/types'
 import {
 	calculateNumberOfUniqueCharacters,
 	checkIfWinner,
@@ -33,9 +33,16 @@ const SECONDS_TO_MILLIS = 1000
 const url =
 	'https://my-json-server.typicode.com/stanko-ingemark/hang_the_wise_man_frontend_task/highscores'
 
-const sendGameData = async (postData: any) => {
-	const { data } = await $fetch<any, MessageResponse>(url).post(postData)
-	return data
+const sendGameData = async (
+	postData: GameData,
+	showToast: (msg: string) => void
+) => {
+	try {
+		await $fetch<any, MessageResponse>(url).post(postData)
+		showToast('Your score has been saved')
+	} catch (error: any) {
+		showToast(error?.message || 'Something went wrong')
+	}
 }
 
 const letters = generateAlphabetLetters()
@@ -78,13 +85,7 @@ export const Game = ({ quote, onReset }: Props) => {
 			duration: timeElapsed * SECONDS_TO_MILLIS
 		}
 
-		sendGameData(postData)
-			.then(() => {
-				showToast('Your score has been saved')
-			})
-			.catch(error => {
-				showToast(error.message || 'Something went wrong')
-			})
+		sendGameData(postData, showToast).catch(console.error)
 	}
 
 	useEffect(() => {
