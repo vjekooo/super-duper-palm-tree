@@ -13,6 +13,7 @@ import {
 import { useToast } from '../../hooks/useToast'
 import { MaskedQuoteText } from '../maskedQuoteText/MaskedQuoteText'
 import { Alphabet } from './Alphabet'
+import { HangmanFigure } from './HangmanFigure'
 
 interface Props {
 	quote: Quote
@@ -88,6 +89,7 @@ export const Game = ({ quote, onReset }: Props) => {
 	return (
 		<Container>
 			<ToastComponent />
+			<HangmanFigure wrongGuesses={wrongGuesses} />
 			<FlexBetween>
 				<Text>Time elapsed: {timeElapsed} seconds</Text>
 				<ResetButton onClick={onReset}>Reset</ResetButton>

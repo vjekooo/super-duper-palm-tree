@@ -27,13 +27,13 @@ export const NameForm: React.FC = () => {
 
 	return (
 		<Container>
-			<label>Name</label>
+			<label>To play the game your have to enter your name</label>
 			<form onSubmit={submitName}>
 				<Input
 					ref={inputRef}
 					value={name}
 					onChange={e => setName(e.target.value)}
-					placeholder="Please enter your name"
+					placeholder="Name"
 				/>
 				<Button type="submit">Submit</Button>
 			</form>
